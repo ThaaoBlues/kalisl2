@@ -19,21 +19,7 @@ os.chdir(os.path.abspath(__file__).replace(os.path.basename(__file__),""))
 
 if is_admin():
     print(pyfiglet.figlet_format("KALISL2"))
-    pinfo(f"opening kali ms-store page...")
-    subprocess.run(["start","ms-windows-store:"],shell=True)
-    sleep(5)
-    c = pyautogui.locateCenterOnScreen("search_bar.png",confidence=0.8)
-    pyautogui.click(c[0],c[1])
-    sleep(1)
-    pyautogui.write("Kali Linux")
-    sleep(1)
-    pyautogui.press('enter')
-    sleep(2)
-    c = pyautogui.locateCenterOnScreen("kali_part.png",confidence=0.8)
-    pyautogui.click(c[0],c[1])
-    sleep(10)
-    #main()
-    pass
+    main()
 else:
     # Re-run the program with admin rights
     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
@@ -61,7 +47,8 @@ def main():
         pinfo("preparing your computer to restart")
         #placing files in startup folder
         open(f"C:\\Users\\{getpass.getuser()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\bool","w")
-        subprocess.run(["copy","quick_wsl2_setup.exe",f"C:\\Users\\{getpass.getuser()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{os.path.basename(__file__)}"],shell=True)
+        for file in os.listdir():
+            subprocess.run(["copy","quick_wsl2_setup.exe",f"C:\\Users\\{getpass.getuser()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{file}"],shell=True)
         
         pinfo("restarting your computer and re-runing this script to get to the next step.\n don't worry this will be automatic.")
         sleep(10)
